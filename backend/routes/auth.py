@@ -1,6 +1,6 @@
 from flask import Blueprint, request, session, jsonify
-from models.user import User
-from db import db
+from backend.models.user import User
+from backend.db import db
 
 auth_bp = Blueprint("auth", __name__)
 
@@ -26,6 +26,8 @@ def register():
 
     db.session.add(user)
     db.session.commit()
+
+    session["user_id"] = user.id  # ✅ Automatically log in
 
     return jsonify({"message": "Registered successfully"}), 201
 

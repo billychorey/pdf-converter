@@ -1,9 +1,16 @@
-import React from 'react';
+// 📁 src/pages/Landing.jsx
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
-function Landing({ users, setIsLoggedIn, setMessage }) {
+function Landing({ users, setIsLoggedIn, setMessage, isLoggedIn }) {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/dashboard');
+    }
+  }, [isLoggedIn, navigate]);
 
   return (
     <div>
@@ -19,15 +26,31 @@ function Landing({ users, setIsLoggedIn, setMessage }) {
           if (!values.password) errors.password = 'Required';
           return errors;
         }}
-        onSubmit={(values, { setSubmitting }) => {
-          const storedPassword = users[values.email];
+        onSubmit={async (values, { setSubmitting }) => {
+          try {
+            const response = await fetch('http://localhost:5001/auth/login', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              credentials: 'include',
+              body: JSON.stringify({
+                username: values.email, // if using email as username
+                password: values.password,
+              }),
+            });
 
-          if (storedPassword && storedPassword === values.password) {
-            setIsLoggedIn(true);
-            setMessage('');
-            navigate('/dashboard');
-          } else {
-            setMessage('Invalid login credentials.');
+            if (response.ok) {
+              setIsLoggedIn(true);
+              setMessage('');
+              navigate('/dashboard');
+            } else {
+              const data = await response.json();
+              setMessage(data.error || 'Login failed.');
+            }
+          } catch (error) {
+            setMessage('Error logging in.');
+            console.error('Login error:', error);
           }
 
           setSubmitting(false);

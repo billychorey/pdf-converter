@@ -17,10 +17,12 @@ function Dashboard() {
     formData.append('image', selectedFile);
 
     try {
-      const response = await fetch('http://localhost:5001/convert', {
-        method: 'POST',
-        body: formData,
-      });
+        const response = await fetch('http://localhost:5001/convert', {
+            method: 'POST',
+            body: formData,
+            credentials: 'include', // ✅ THIS LINE IS CRUCIAL
+        });
+
 
       if (response.ok) {
         const blob = await response.blob();
@@ -51,11 +53,21 @@ function Dashboard() {
           <h2>Generated PDFs</h2>
           <ul>
             {pdfs.map((pdf, index) => (
-              <li key={index}>
-                <a href={pdf.url} download={`converted_${index + 1}.pdf`}>
-                  PDF from {pdf.timestamp}
+            <li key={index}>
+                <span>PDF from {pdf.timestamp}: </span>
+                <a
+                    href={pdf.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ marginRight: '10px' }}
+                >
+                    Open
                 </a>
-              </li>
+                <a href={pdf.url} download={`converted_${index + 1}.pdf`}>
+                    Download
+                </a>
+            </li>
+
             ))}
           </ul>
         </div>

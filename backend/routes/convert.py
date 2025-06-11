@@ -5,16 +5,23 @@ from datetime import datetime
 
 convert_bp = Blueprint("convert", __name__)
 
-@convert_bp.route("", methods=["POST"])
+@convert_bp.route("/", methods=["POST"])
 def convert_image_to_pdf():
-    if "user" not in session:
+    print("Session contents:", dict(session))  # 👈 Add this line
+
+    # ✅ Match the session key used in auth.py
+    if "user_id" not in session:
         return {"error": "Unauthorized"}, 401
 
     if "image" not in request.files:
         return {"error": "No image provided"}, 400
 
     image_file = request.files["image"]
-    image = Image.open(image_file).convert("RGB")
+    
+    try:
+        image = Image.open(image_file).convert("RGB")
+    except Exception as e:
+        return {"error": f"Invalid image: {str(e)}"}, 400
 
     pdf_bytes = io.BytesIO()
     image.save(pdf_bytes, format="PDF")

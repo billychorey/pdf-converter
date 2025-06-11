@@ -17,7 +17,6 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [message, setMessage] = useState('');
 
-  // 🔄 Sync users with localStorage
   useEffect(() => {
     localStorage.setItem('users', JSON.stringify(users));
   }, [users]);
@@ -34,25 +33,28 @@ function App() {
         <Route
           path="/"
           element={
-            <Landing
-              users={users}
-              setIsLoggedIn={setIsLoggedIn}
-              setMessage={setMessage}
-            />
+            isLoggedIn ? (
+              <Navigate to="/dashboard" />
+            ) : (
+              <Landing
+                users={users}
+                setIsLoggedIn={setIsLoggedIn}
+                setMessage={setMessage}
+                isLoggedIn={isLoggedIn}
+              />
+            )
           }
         />
         <Route
           path="/register"
           element={
             <Register
-              users={users}
-              setUsers={setUsers}
               setMessage={setMessage}
-              setIsLoggedIn={setIsLoggedIn} // ✅ this line was missing
+              setIsLoggedIn={setIsLoggedIn}
+              isLoggedIn={isLoggedIn}
             />
           }
         />
-
         <Route
           path="/forgot-password"
           element={
