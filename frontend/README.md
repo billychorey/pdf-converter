@@ -86,10 +86,3 @@ npm run dev
 
 ---
 
-## 📬 Feedback
-
-Have an idea or ran into a bug? Open an issue or start a discussion. This project is open to learning, tweaking, and improving.
-
----
-
-> Made with focus and caffeine by [Your Name]
