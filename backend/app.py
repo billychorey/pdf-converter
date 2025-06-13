@@ -1,9 +1,15 @@
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))  # 👈 Add this to fix Flask import path issues
+
 from flask import Flask
 from flask_migrate import Migrate
 from flask_cors import CORS
-from backend.routes.auth import auth_bp
-from backend.routes.convert import convert_bp
-from backend.models import db
+from routes.auth import auth_bp
+from routes.convert import convert_bp
+from models import db
+from models.user import User
+
 
 app = Flask(__name__)
 app.secret_key = "supersecretkey"  # 🔐 Replace this later with something secure
@@ -29,4 +35,4 @@ app.register_blueprint(auth_bp, url_prefix='/auth')
 app.register_blueprint(convert_bp, url_prefix='/convert')
 
 if __name__ == '__main__':
-    app.run(port=5001, debug=True)
+        app.run(port=5001, debug=True)

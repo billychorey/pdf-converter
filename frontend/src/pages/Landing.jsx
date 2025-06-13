@@ -35,7 +35,7 @@ function Landing({ users, setIsLoggedIn, setMessage, isLoggedIn }) {
               },
               credentials: 'include',
               body: JSON.stringify({
-                username: values.email, // if using email as username
+                email: values.email, // if using email as username
                 password: values.password,
               }),
             });

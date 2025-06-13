@@ -49,7 +49,6 @@ cd backend
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-export FLASK_APP=backend.app
 flask db upgrade
 python -m flask run --port=5001
 ```

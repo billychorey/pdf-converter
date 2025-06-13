@@ -1,49 +1,66 @@
 from flask import Blueprint, request, session, jsonify
-from backend.models.user import User
-from backend.db import db
+from models.user import User
+from db import db
 
 auth_bp = Blueprint("auth", __name__)
 
 @auth_bp.route("/register", methods=["POST"])
 def register():
-    data = request.get_json()
-    username = data.get("username")
-    email = data.get("email")
-    password = data.get("password")
+    try:
+        data = request.get_json()
+        username = data.get("username")
+        email = data.get("email")
+        password = data.get("password")
 
-    if not username or not email or not password:
-        return jsonify({"error": "Missing required fields"}), 400
+        print("📨 Registration data received:", data)
 
-    existing_user = User.query.filter(
-        (User.username == username) | (User.email == email)
-    ).first()
+        if not username or not email or not password:
+            return jsonify({"error": "Missing required fields"}), 400
 
-    if existing_user:
-        return jsonify({"error": "User already exists"}), 409
+        existing_user = User.query.filter(
+            (User.username == username) | (User.email == email)
+        ).first()
 
-    user = User(username=username, email=email)
-    user.set_password(password)
+        if existing_user:
+            return jsonify({"error": "User already exists"}), 409
 
-    db.session.add(user)
-    db.session.commit()
+        user = User(username=username, email=email)
+        user.set_password(password)
 
-    session["user_id"] = user.id  # ✅ Automatically log in
+        db.session.add(user)
+        db.session.commit()
 
-    return jsonify({"message": "Registered successfully"}), 201
+        print(f"✅ Registered user: {user.email}")
+        session["user_id"] = user.id
+
+        return jsonify({"message": "Registered successfully"}), 201
+
+    except Exception as e:
+        print("🚨 Registration error:", e)
+        return jsonify({"error": str(e)}), 500
 
 @auth_bp.route("/login", methods=["POST"])
 def login():
-    data = request.get_json()
-    username = data.get("username")
-    password = data.get("password")
+    try:
+        data = request.get_json()
+        email = data.get("email")
+        password = data.get("password")
 
-    user = User.query.filter_by(username=username).first()
+        print("🔐 Login attempt for:", email)
 
-    if not user or not user.check_password(password):
-        return jsonify({"error": "Invalid credentials"}), 401
+        user = User.query.filter_by(email=email).first()
 
-    session["user_id"] = user.id
-    return jsonify({"message": "Logged in"}), 200
+        if not user or not user.check_password(password):
+            print("❌ Invalid credentials")
+            return jsonify({"error": "Invalid credentials"}), 401
+
+        session["user_id"] = user.id
+        print("✅ Login successful")
+        return jsonify({"message": "Logged in"}), 200
+
+    except Exception as e:
+        print("🚨 Login error:", e)
+        return jsonify({"error": str(e)}), 500
 
 @auth_bp.route("/logout", methods=["POST"])
 def logout():
