@@ -7,15 +7,24 @@ function NavBar({ isLoggedIn, setIsLoggedIn, setMessage }) {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    setMessage('You\'ve been logged out.');
+    setMessage("You've been logged out.");
     navigate('/');
   };
 
-  if (!isLoggedIn) return null; // hide nav entirely unless logged in
+  if (!isLoggedIn) return null; // Hide nav unless logged in
 
   return (
-    <nav style={{ marginBottom: '1rem', borderBottom: '1px solid #ccc', paddingBottom: '0.5rem' }}>
-      <button onClick={handleLogout}>Sign Out</button>
+    <nav className="bg-white shadow p-4 mb-4">
+      <div className="max-w-7xl mx-auto flex justify-between items-center">
+        <h1 className="text-xl font-semibold text-gray-800">PDF Converter</h1>
+        <div className="space-x-4">
+          <Link to="/" className="text-blue-600 hover:underline">Home</Link>
+          <Link to="/about" className="text-blue-600 hover:underline">About</Link>
+          <button onClick={handleLogout} className="text-red-600 hover:underline">
+            Logout
+          </button>
+        </div>
+      </div>
     </nav>
   );
 }

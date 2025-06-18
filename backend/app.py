@@ -24,7 +24,7 @@ db.init_app(app)
 migrate = Migrate(app, db)
 
 # ✅ CORS config
-CORS(app, origins=["http://localhost:5173"], supports_credentials=True)
+CORS(app, origins=["http://localhost:5175"], supports_credentials=True)
 
 # ✅ Cookie settings
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'

@@ -1,3 +1,4 @@
+// 📁 src/components/ImageUpload.jsx
 import React, { useState } from "react";
 
 function ImageUpload() {
@@ -37,25 +38,48 @@ function ImageUpload() {
   };
 
   return (
-    <div>
-      <h1>Image to PDF Converter</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="file" accept="image/*" onChange={handleFileChange} />
-        <button type="submit">Convert to PDF</button>
-      </form>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-6">
+      <div className="w-full max-w-lg bg-white p-8 rounded-lg shadow-md">
+        <h1 className="text-2xl font-bold text-blue-600 mb-6">
+          Image to PDF Converter
+        </h1>
 
-      {downloadLinks.length > 0 && (
-        <>
-          <h2>Converted PDFs:</h2>
-          <ul>
-            {downloadLinks.map(({ url, filename }, index) => (
-              <li key={index}>
-                <a href={url} download={filename}>{filename}</a>
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded"
+          />
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+          >
+            Convert to PDF
+          </button>
+        </form>
+
+        {downloadLinks.length > 0 && (
+          <div className="mt-6">
+            <h2 className="text-lg font-semibold mb-2 text-gray-700">
+              Converted PDFs:
+            </h2>
+            <ul className="list-disc list-inside space-y-2">
+              {downloadLinks.map(({ url, filename }, index) => (
+                <li key={index}>
+                  <a
+                    href={url}
+                    download={filename}
+                    className="text-blue-600 hover:underline"
+                  >
+                    {filename}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

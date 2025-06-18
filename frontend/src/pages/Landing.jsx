@@ -13,7 +13,7 @@ function Landing({ users, setIsLoggedIn, setMessage, isLoggedIn }) {
   }, [isLoggedIn, navigate]);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
       <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
         <h1 className="text-3xl font-bold text-blue-600 mb-4">
           Welcome to the PDF Converter
@@ -63,7 +63,7 @@ function Landing({ users, setIsLoggedIn, setMessage, isLoggedIn }) {
                 <Field
                   type="email"
                   name="email"
-                  className="w-full px-3 py-2 border border-gray-300 rounded"
+                  className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
                 />
                 <ErrorMessage name="email" component="div" className="text-red-500 text-sm" />
               </div>
@@ -73,7 +73,7 @@ function Landing({ users, setIsLoggedIn, setMessage, isLoggedIn }) {
                 <Field
                   type="password"
                   name="password"
-                  className="w-full px-3 py-2 border border-gray-300 rounded"
+                  className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
                 />
                 <ErrorMessage name="password" component="div" className="text-red-500 text-sm" />
               </div>
@@ -89,7 +89,21 @@ function Landing({ users, setIsLoggedIn, setMessage, isLoggedIn }) {
           )}
         </Formik>
 
-        <div className="mt-4 text-center text-sm text-gray-600">
+        {/** Optional: display login error message */}
+        {typeof setMessage === 'function' && (
+          <div className="mt-4 text-center text-sm text-gray-600">
+            {/* nothing to show here */}
+          </div>
+        )}
+
+        {/** Actual message shown if set */}
+        {typeof setMessage !== 'function' && setMessage && (
+          <div className="mt-4 p-3 text-sm text-red-700 bg-red-100 border border-red-300 rounded">
+            {setMessage}
+          </div>
+        )}
+
+        <div className="mt-6 text-center text-sm text-gray-600">
           <Link to="/register" className="text-blue-600 hover:underline mr-4">
             Create Account
           </Link>
@@ -97,9 +111,7 @@ function Landing({ users, setIsLoggedIn, setMessage, isLoggedIn }) {
             Forgot Password?
           </Link>
         </div>
-
       </div>
-
     </div>
   );
 }
