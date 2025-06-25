@@ -14,7 +14,7 @@ function NavBar({ isLoggedIn, setIsLoggedIn, setMessage }) {
   if (!isLoggedIn) return null; // Hide nav unless logged in
 
   return (
-    <nav className="bg-white shadow p-4 mb-4">
+    <nav className="bg-background shadow p-4 mb-4">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <h1 className="text-xl font-semibold text-gray-800">PDF Converter</h1>
         <div className="space-x-4">

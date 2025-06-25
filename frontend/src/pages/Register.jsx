@@ -68,7 +68,7 @@ function Register({ setMessage, setIsLoggedIn, isLoggedIn }) {
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
-      <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
+      <div className="max-w-md w-full bg-background p-8 rounded-lg shadow-md">
         <h1 className="text-3xl font-bold text-blue-600 mb-4">
           {showLogin ? 'Log In' : 'Create Account'}
         </h1>

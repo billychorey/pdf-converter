@@ -40,7 +40,7 @@ function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-      <div className="max-w-2xl mx-auto bg-white shadow-md rounded-lg p-6">
+      <div className="max-w-2xl mx-auto bg-background shadow-md rounded-lg p-6">
         <h1 className="text-2xl font-bold text-blue-700 mb-4">Dashboard</h1>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -94,4 +94,6 @@ function Dashboard() {
   );
 }
 
+
 export default Dashboard;
+

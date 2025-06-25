@@ -1,10 +1,16 @@
+# Python-related
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
 .env
+db.sqlite3
+
+# Virtual env
 venv/
+
+# Node/Vite (frontend)
 node_modules/
 dist/
 build/
+
+# OS cruft
 .DS_Store

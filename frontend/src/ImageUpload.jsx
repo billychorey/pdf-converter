@@ -39,7 +39,7 @@ function ImageUpload() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-6">
-      <div className="w-full max-w-lg bg-white p-8 rounded-lg shadow-md">
+      <div className="w-full max-w-lg bg-background p-8 rounded-lg shadow-md">
         <h1 className="text-2xl font-bold text-blue-600 mb-6">
           Image to PDF Converter
         </h1>
